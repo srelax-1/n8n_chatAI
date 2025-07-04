@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin File Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      padding: 40px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      margin-top: 20px;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e0f7e9;
+      color: #0a7d40;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📁 Upload Knowledge Document</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".pdf,.csv" required>
+      <button type="submit">Upload</button>
+    </form>
+    <div class="message" id="uploadMessage" style="display: none;"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+    const msg = document.getElementById("uploadMessage");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch("/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await res.json();
+        msg.innerText = result.message || "File uploaded successfully.";
+        msg.style.display = "block";
+      } catch (err) {
+        msg.innerText = "Upload failed: " + err.message;
+        msg.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>

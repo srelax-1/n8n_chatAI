@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Your n8n webhook endpoint (local or ngrok)
-N8N_WEBHOOK_URL = "http://localhost:5678/webhook/chat-with-ai"
+N8N_WEBHOOK_URL = "your webhook URL here"
 
 @app.route("/")
 def index():

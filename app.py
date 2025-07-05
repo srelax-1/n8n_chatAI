@@ -48,6 +48,15 @@ def upload_file():
             if os.path.getsize(filepath) == 0:
                 return jsonify({"message": "Uploaded file is empty"}), 400
 
+            # File type validation
+            mimetype = file.mimetype
+            if filename.lower().endswith(".pdf") and mimetype != "application/pdf":
+                return jsonify({"message": "File extension is .pdf but mimetype is not PDF."}), 400
+            if filename.lower().endswith(".csv") and mimetype not in ["text/csv", "application/vnd.ms-excel"]:
+                return jsonify({"message": "File extension is .csv but mimetype is not CSV."}), 400
+            if filename.lower().endswith(".docx") and mimetype != "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                return jsonify({"message": "File extension is .docx but mimetype is not DOCX."}), 400
+            
             # Determine file type:
             if filename.lower().endswith(".pdf"):
                 chunks = chunk_pdf_with_pages(filepath)
@@ -71,6 +80,13 @@ def upload_file():
             # Send chunks to n8n webhook
             res = requests.post(N8N_UPLOAD_WEBHOOK, json={"chunks": chunks})
 
+            # Clean up uploaded file
+            try:
+                os.remove(filepath)
+            except Exception as cleanup_err:
+                # Optionally log cleanup_err or ignore
+                pass
+            
             if res.ok:
                 return jsonify({"message": "File uploaded and sent to RAG workflow."})
             else:
@@ -117,6 +133,8 @@ def chunk_csv_rows(filepath, max_rows=50):
     with open(filepath, newline='', encoding="utf-8", errors="ignore") as csvfile:
         reader = csv.reader(csvfile)
         header = next(reader, None)
+        if not header:
+            return []
         rows = []
         i = 0
         for i, row in enumerate(reader, 1):

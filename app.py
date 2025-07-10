@@ -6,12 +6,14 @@ import re
 import pdfplumber
 import os
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-
-# n8n webhook endpoint 
-N8N_WEBHOOK_URL = ""
-N8N_UPLOAD_WEBHOOK = ""
+# Load environment variables
+N8N_WEBHOOK_URL = app.config['N8N_WEBHOOK_URL']
+N8N_UPLOAD_WEBHOOK = app.config['N8N_UPLOAD_WEBHOOK']
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)

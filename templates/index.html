@@ -5,54 +5,70 @@
   <title>n8n AI Chat</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f7f7f7;
-    }
-    #chatbox {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .message {
-      margin-bottom: 10px;
-    }
-    .user {
-      font-weight: bold;
-      color: #1a73e8;
-    }
-    .ai {
-      color: #0f9d58;
-    }
-    #inputArea {
-      display: flex;
-      margin-top: 20px;
-    }
-    #inputArea input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    #inputArea button {
-      padding: 10px 16px;
-      margin-left: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background-color: #1a73e8;
-      color: white;
-      cursor: pointer;
-    }
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #chatbox {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .message {
+    margin-bottom: 10px;
+  }
+
+  .user {
+    font-weight: bold;
+    color: #1a73e8;
+  }
+
+  .ai {
+    color: #0f9d58;
+  }
+
+  #inputArea {
+    display: flex;
+    margin-top: 20px;
+  }
+
+  #inputArea input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  #inputArea button {
+    padding: 10px 16px;
+    margin-left: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1a73e8;
+    color: white;
+    cursor: pointer;
+  }
+
+  #inputArea button.loading {
+    background-color: #90c2f7;
+  }
+  
   </style>
 </head>
 <body>
   <div id="chatbox">
-    <h2>🤖 Chat with KnowledgeNet</h2>
+    <h2>Chat with KnowledgeNet</h2>
     <div id="messages"></div>
 
     <div id="inputArea">
@@ -63,14 +79,24 @@
 
   <script>
     const webhookUrl = "/chat";
+    let isLoading = false;
 
     async function sendMessage() {
+      if (isLoading) return; // Block if already sending
+
       const input = document.getElementById("userInput");
+      const button = document.querySelector("#inputArea button");
       const question = input.value.trim();
       if (!question) return;
 
       appendMessage("user", question);
       input.value = "";
+
+      // Disable input & button and add loading style
+      input.disabled = true;
+      button.disabled = true;
+      button.classList.add("loading");
+      isLoading = true;
 
       try {
         const res = await fetch(webhookUrl, {
@@ -84,6 +110,13 @@
       } catch (err) {
         console.error(err);
         appendMessage("ai", "⚠️ Error connecting to AI agent.");
+      } finally {
+        // Re-enable input & button
+        input.disabled = false;
+        button.disabled = false;
+        button.classList.remove("loading");
+        input.focus();
+        isLoading = false;
       }
     }
 
@@ -95,6 +128,13 @@
       messages.appendChild(msg);
       messages.scrollTop = messages.scrollHeight;
     }
+
+    document.getElementById("userInput").addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !isLoading) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
   </script>
 </body>
 </html>

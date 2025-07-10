@@ -12,8 +12,12 @@ load_dotenv()
 
 app = Flask(__name__)
 # Load environment variables
-N8N_WEBHOOK_URL = app.config['N8N_WEBHOOK_URL']
-N8N_UPLOAD_WEBHOOK = app.config['N8N_UPLOAD_WEBHOOK']
+N8N_CHAT_WEBHOOK = os.getenv('N8N_CHAT_WEBHOOK')
+N8N_UPLOAD_WEBHOOK = os.getenv('N8N_UPLOAD_WEBHOOK')
+N8N_BASIC_AUTH_USER= os.getenv('N8N_BASIC_AUTH_USER')
+N8N_BASIC_AUTH_PASSWORD= os.getenv('N8N_BASIC_AUTH_PASSWORD')
+
+auth = (N8N_BASIC_AUTH_USER, N8N_BASIC_AUTH_PASSWORD)
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -26,7 +30,7 @@ def index():
 def chat():
     try:
         user_input = request.get_json()
-        response = requests.post(N8N_WEBHOOK_URL, json=user_input)
+        response = requests.post(N8N_CHAT_WEBHOOK, json=user_input, auth=auth)
         return jsonify(response.json())
     except Exception as e:
         return jsonify({"aiResponse": f"⚠️ Error: {str(e)}"}), 500
@@ -80,7 +84,7 @@ def upload_file():
                 chunk["source_file"] = filename
 
             # Send chunks to n8n webhook
-            res = requests.post(N8N_UPLOAD_WEBHOOK, json={"chunks": chunks})
+            res = requests.post(N8N_UPLOAD_WEBHOOK, json={"chunks": chunks}, auth=auth)
 
             # Clean up uploaded file
             try:

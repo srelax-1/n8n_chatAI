@@ -1,12 +1,12 @@
 {
-  "name": "Knowledge_base_n8n_real",
+  "name": "Knowledge_base_n8n_ollama",
   "nodes": [
     {
       "parameters": {
         "name": "documents",
         "topK": 3
       },
-      "id": "462607bd-6653-4b30-80f6-d0cfd368b9eb",
+      "id": "394d83f8-e7e8-4ac8-922e-023c4dcd6ab8",
       "name": "Vector Store Tool",
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1,
@@ -17,40 +17,12 @@
     },
     {
       "parameters": {
-        "dataType": "binary",
-        "options": {}
-      },
-      "id": "19d7e7ce-4436-4782-93ab-5558812270b1",
-      "name": "Default Data Loader",
-      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
-      "typeVersion": 1,
-      "position": [
-        260,
-        620
-      ]
-    },
-    {
-      "parameters": {
-        "chunkSize": 200,
-        "options": {}
-      },
-      "id": "1f66a47e-8e25-4e49-a9a7-77bec61db2b5",
-      "name": "Recursive Character Text Splitter",
-      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
-      "typeVersion": 1,
-      "position": [
-        400,
-        760
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Local RAG AI Agent with Chat Interface",
+        "content": "## Local RAG AI Agent",
         "height": 387,
         "width": 1349,
         "color": 4
       },
-      "id": "5dd60577-1e5a-471c-9b2d-41c99c619ccb",
+      "id": "dbd05a50-caa4-40fd-871c-b23f9081e3d6",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -66,7 +38,7 @@
         "width": 603,
         "color": 3
       },
-      "id": "73821660-499e-4bea-892c-a4e8991d52b5",
+      "id": "638944d5-452d-428e-9fdc-877fa7695b4d",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -82,7 +54,7 @@
         "width": 749,
         "color": 5
       },
-      "id": "e87e533b-1511-4e7b-86fd-47dfbc82e016",
+      "id": "ca3490cb-0437-4ed4-a98a-2b36b334b7d2",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -101,7 +73,7 @@
         },
         "options": {}
       },
-      "id": "ff9d95e3-03ce-400f-b0f2-848d8560bd48",
+      "id": "de3a328f-0b8f-4c3d-8397-948d3cb623fc",
       "name": "Qdrant Vector Store",
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1,
@@ -127,7 +99,7 @@
         },
         "options": {}
       },
-      "id": "dc294190-bb1f-493c-bbbb-a2dd38bc9f56",
+      "id": "efc84841-18f7-4bb1-ad3b-97ca5c570dd9",
       "name": "Qdrant Vector Store Insert",
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1,
@@ -150,7 +122,7 @@
           "responseCode": 200
         }
       },
-      "id": "69111829-f249-4b9d-a6fa-89b0a9ef8d8e",
+      "id": "cea589cb-18e4-4670-9991-d8b569fad8a0",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -164,10 +136,10 @@
         "promptType": "define",
         "text": "={{ $json.chatInput }}",
         "options": {
-          "systemMessage": "Use ONLY the information retrieved from the knowledge base to answer the question.\nIf the knowledge base is empty or unrelated, say: \"I don’t know based on the uploaded content.\""
+          "systemMessage": "Use ONLY the information retrieved from the knowledge base to answer the question.\nIf the knowledge base is empty or unrelated, say: \"I’m unable to answer that based on the information I have right now.\""
         }
       },
-      "id": "b149971a-ea81-4baf-a9a7-c8c84486089c",
+      "id": "f64d8279-f1d7-4739-be31-1f24dc713ce1",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
@@ -190,7 +162,7 @@
         },
         "options": {}
       },
-      "id": "8b6a31df-85a3-4110-8f66-f6e45657285b",
+      "id": "4968402a-0b43-44af-be29-b060a44b1604",
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -201,79 +173,12 @@
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        460,
-        220
-      ],
-      "id": "896f7c70-7cd2-4efe-bcc0-8762cde78450",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "KkWYLpTvphtC5Nf0",
-          "name": "n8n free OpenAI API credits"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        960,
-        740
-      ],
-      "id": "de370b93-c485-404b-bb49-f52d9f3d9748",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "KkWYLpTvphtC5Nf0",
-          "name": "n8n free OpenAI API credits"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        440,
-        1080
-      ],
-      "id": "e457f8b1-bcac-4eda-84bf-7f43db2fef08",
-      "name": "Embeddings OpenAI1",
-      "credentials": {
-        "openAiApi": {
-          "id": "KkWYLpTvphtC5Nf0",
-          "name": "n8n free OpenAI API credits"
-        }
-      }
-    },
-    {
-      "parameters": {
         "httpMethod": "POST",
-        "path": "chat-with-ai",
+        "path": "1a0b00b4-f07c-4827-936b-7b924a9b3dc6",
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "e4da04cc-3fd1-4b13-b66c-9ea7a5bf22fe",
+      "id": "13fa689f-3c77-42ee-8c49-16e884994b6c",
       "name": "ChatWebhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
@@ -281,12 +186,12 @@
         -160,
         40
       ],
-      "webhookId": "4a839da9-b8a2-45f8-bcaf-c484f9a5912d"
+      "webhookId": "1a0b00b4-f07c-4827-936b-7b924a9b3dc6"
     },
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "upload-file",
+        "path": "24964af1-c770-4327-87e8-cccb86de08fd",
         "responseMode": "lastNode",
         "responseData": "noData",
         "options": {}
@@ -297,35 +202,119 @@
         -140,
         480
       ],
-      "id": "4e42c7c1-04a8-4688-b1d9-836d1392afea",
+      "id": "d02304e6-ad96-44dd-a166-e1d01020cfa3",
       "name": "UploadWebhook",
-      "webhookId": "8fdafc1f-ff61-4757-8fe3-2a370d7291e2"
+      "webhookId": "24964af1-c770-4327-87e8-cccb86de08fd"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.chunks",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        820
+      ],
+      "id": "e8b5b2ec-50fd-4626-939a-69235003cf86",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3e87709b-9b09-4be5-9383-98accf203fc6",
+              "name": "page_content",
+              "value": "={{ $json.chunk_text }}",
+              "type": "string"
+            },
+            {
+              "id": "a9d11b82-0e7c-4f01-98ef-02afc6f3e6bb",
+              "name": "metadata",
+              "value": "={\"chunk_title\": \"{{ $json[\"chunk_title\"] }}\", \"source_file\": \"{{ $json[\"source_file\"] }}\"}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -220,
+        1080
+      ],
+      "id": "74702a7b-b03a-47f9-8052-b61cde246466",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        700
+      ],
+      "id": "38b62ccb-0f05-4799-91fe-9874d3693ae8",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "content": "This node is doing same thing as the Split Out node."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        1060
+      ],
+      "id": "02ca559f-b785-4c7c-9a9c-1b714551f671",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        440,
+        240
+      ],
+      "id": "075b3512-8b8e-4d50-aca9-74cad513caca",
+      "name": "Ollama Chat Model"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        920,
+        740
+      ],
+      "id": "45e60c19-bb13-4061-b868-b729cb64f80b",
+      "name": "Ollama Chat Model1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        460,
+        1040
+      ],
+      "id": "20de838f-5cfc-4656-87f7-63b5917a81f5",
+      "name": "Embeddings Ollama"
     }
   ],
   "pinData": {},
   "connections": {
-    "Default Data Loader": {
-      "ai_document": [
-        [
-          {
-            "node": "Qdrant Vector Store Insert",
-            "type": "ai_document",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Recursive Character Text Splitter": {
-      "ai_textSplitter": [
-        [
-          {
-            "node": "Default Data Loader",
-            "type": "ai_textSplitter",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Qdrant Vector Store": {
       "ai_vectorStore": [
         [
@@ -370,44 +359,6 @@
         ]
       ]
     },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Vector Store Tool",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Embeddings OpenAI1": {
-      "ai_embedding": [
-        [
-          {
-            "node": "Qdrant Vector Store",
-            "type": "ai_embedding",
-            "index": 0
-          },
-          {
-            "node": "Qdrant Vector Store Insert",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "ChatWebhook": {
       "main": [
         [
@@ -423,8 +374,73 @@
       "main": [
         [
           {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
             "node": "Qdrant Vector Store Insert",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        []
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "ai_embedding",
             "index": 0
           }
         ]
@@ -435,11 +451,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "cc0a66d0-92f2-4a82-bce1-27c66126d5cd",
+  "versionId": "125766a2-5226-41ce-a8d1-b9866e6ed84a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "1f07af6b3fa86e948fc26721a55553c71cf6e65076df471633f7e6593b8f3c62"
   },
-  "id": "sav6gj9eZxtdwoku",
+  "id": "R93JRgJTbE2i6rDr",
   "tags": []
 }

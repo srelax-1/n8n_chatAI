@@ -94,14 +94,14 @@ Visit http://127.0.0.1:5678 and sign up/log in.
 - Click the workflow icon (as shown in the screenshot) ![n8n workflow screenshot](n8n_workflow/img1.png)
 - Click the three-dot menu ![n8n workflow screenshot](n8n_workflow/img2.png)
 - Click "Import from file" and select the Knowledge_base_n8n_ollama.json file from the n8n_workflow/ folder ![n8n workflow screenshot](n8n_workflow/img3.png)
-- You should see this ![n8n workflow screenshot](n8n_workflow/img4.png)
+- You should see this ![n8n workflow screenshot](n8n_workflow/img6.png)
 
 ---
 
 ## 🧠 How it Works
 
 ### Admin Upload
-![flask upload interface](n8n_workflow/img5.png)
+![flask upload interface](n8n_workflow/img4.png)
 
 - Upload PDF or CSV files via the admin page
 - Files are processed and stored in a vector store

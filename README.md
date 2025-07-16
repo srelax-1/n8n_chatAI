@@ -95,6 +95,10 @@ Visit http://127.0.0.1:5678 and sign up/log in.
 - Click the three-dot menu ![n8n workflow screenshot](n8n_workflow/img2.png)
 - Click "Import from file" and select the Knowledge_base_n8n_ollama.json file from the n8n_workflow/ folder ![n8n workflow screenshot](n8n_workflow/img3.png)
 - You should see this ![n8n workflow screenshot](n8n_workflow/img6.png)
+- Double click on the Qdrant vector store to create creadentials ![n8n workflow screenshot](n8n_workflow/img7.png)
+- Type the url to the Qdrant vector store and save creadentials ![n8n workflow screenshot](n8n_workflow/img8.png)
+- Double click on the Ollama chat model to create creadentials ![n8n workflow screenshot](n8n_workflow/img9.png)
+- Click on save and also make the workflow active ![n8n workflow screenshot](n8n_workflow/img10.png)
 
 ---
 

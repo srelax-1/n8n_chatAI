@@ -101,12 +101,18 @@ Visit http://127.0.0.1:5678 and sign up/log in.
 ## 🧠 How it Works
 
 ### Admin Upload
+```h
+http://127.0.0.1:5000/upload
+```
 ![flask upload interface](n8n_workflow/img4.png)
 
 - Upload PDF or CSV files via the admin page
 - Files are processed and stored in a vector store
 
 ### Chat Interface
+```h
+http://127.0.0.1:5000
+```
 ![flask chat interface](n8n_workflow/img5.png)
 - Users enter queries
 - RAG model fetches relevant document chunks

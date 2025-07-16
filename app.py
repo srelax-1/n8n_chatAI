@@ -52,6 +52,10 @@ def chat():
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload_file():
+    if request.method == "GET":
+        logger.info("Rendering upload page")
+        return render_template("upload.html")
+    
     if "file" not in request.files:
         return jsonify({"message": "No file part in request"}), 400
 

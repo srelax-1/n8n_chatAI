@@ -1,9 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-import csv
-import docx
 import requests
-import re
-import pdfplumber
 import os
 import logging
 from werkzeug.utils import secure_filename
@@ -28,10 +24,6 @@ app = Flask(__name__)
 # Environment Variables
 N8N_CHAT_WEBHOOK = os.getenv('N8N_CHAT_WEBHOOK')
 N8N_UPLOAD_WEBHOOK = os.getenv('N8N_UPLOAD_WEBHOOK')
-N8N_BASIC_AUTH_USER = os.getenv('N8N_BASIC_AUTH_USER')
-N8N_BASIC_AUTH_PASSWORD = os.getenv('N8N_BASIC_AUTH_PASSWORD')
-
-auth = (N8N_BASIC_AUTH_USER, N8N_BASIC_AUTH_PASSWORD)
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -48,7 +40,7 @@ def chat():
         user_input = request.get_json()
         logger.info(f"Received /chat request: {user_input}")
         
-        response = requests.post(N8N_CHAT_WEBHOOK, json=user_input, auth=auth)
+        response = requests.post(N8N_CHAT_WEBHOOK, json=user_input)
         logger.info(f"n8n chat response status: {response.status_code}")
         logger.debug(f"n8n chat response content: {response.text}")
         
@@ -56,6 +48,7 @@ def chat():
     except Exception as e:
         logger.exception("Error in /chat route")
         return jsonify({"aiResponse": f"⚠️ Error: {str(e)}"}), 500
+
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload_file():
@@ -72,8 +65,7 @@ def upload_file():
 
     res = requests.post(
         N8N_UPLOAD_WEBHOOK,
-        files=files,
-        auth=auth
+        files=files
     )
 
     if res.ok:
